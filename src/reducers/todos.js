@@ -1,21 +1,11 @@
-const todos = (state = [], action) => {
+const todos = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false
-        }
-      ]
-    case 'TOGGLE_TODO':
-      return state.map(todo =>
-        todo.id === action.id ? {
-          ...todo,
-          completed: !todo.completed
-        } : todo
-      )
+    case 'ADD_TODO_REQUEST':
+      return {...state, notice: 'Sending data...'}
+    case 'ADD_TODO_SUCCESS':
+      return {...state, notice: 'Complete'}
+    case 'ADD_TODO_ERROR':
+      return {...state, notice: 'Errror'}
     default:
       return state
   }
