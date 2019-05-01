@@ -1,4 +1,5 @@
 import {
+  LOGOUT_SUCCESS,
   ADD_TODO_REQUEST,
   ADD_TODO_SUCCESS,
   ADD_TODO_ERROR,
@@ -8,7 +9,7 @@ import {
 }
 from '../actions/'
 
-const getStringForCompleted = (completed) => ( // #2
+const getStringForCompleted = (completed) => (
   completed ? '完了' : '未完了'
 )
 
@@ -27,20 +28,17 @@ const todos = (state = {}, action) => {
           '"changing...'
       }
     case TOGGLE_TODO_SUCCESS:
-      return {
-        ...state,
-        notice: // #1
+      return {...state, notice:
           '"' + action.text + '"\'s Status"' +
           getStringForCompleted(action.completed) +
           '"cahnged.'
       }
     case TOGGLE_TODO_ERROR:
-      return {
-        ...state,
-        notice: // #1
+      return {...state, notice:
           '"' + action.text + '"error occured'
       }
-      // case 'TOGGLE_TODO’: は削除  // #3
+    case LOGOUT_SUCCESS:
+      return {}
     default:
       return state
   }
