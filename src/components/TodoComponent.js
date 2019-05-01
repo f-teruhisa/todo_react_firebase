@@ -3,14 +3,41 @@ import Footer from './Footer'
 import NoticeForTodo from './NoticeForTodo'
 import AddTodo from '../containers/AddTodo'
 import VisibleTodoList from '../containers/VisibleTodoList'
+import {　connect　} from 'react-redux'
+import {　isEmpty,　isLoaded　} from 'react-redux-firebase'
+import PropTypes from 'prop-types'
 
-const TodoComponent = () => (
-  <div>
-    <AddTodo />
-    <NoticeForTodo />
-    <VisibleTodoList />
-    <Footer />
-  </div>
-)
+let TodoComponent = ({uid,　authenticating,　authenticated}) => {
+    if (authenticating) {
+      return <div> Now Login...</div>
+    }
+    if (!authenticated) { //#5
+      return <div>After login, you can see task list.</div>
+    }
+  return (
+    <div>
+      <AddTodo />
+      <NoticeForTodo />
+      <VisibleTodoList uid={uid} />  {}
+      <Footer />
+    </div>
+  )
+}
+
+TodoComponent.propTypes = {
+  uid: PropTypes.string,
+  authenticating: PropTypes.bool.isRequired,
+  authenticated: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = ({ firebase: { auth, auth: { uid } } }) => ({
+  uid,
+  authenticating: !isLoaded(auth),
+  authenticated: !isEmpty(auth)
+})
+
+TodoComponent = connect(
+  mapStateToProps
+)(TodoComponent)
 
 export default TodoComponent;

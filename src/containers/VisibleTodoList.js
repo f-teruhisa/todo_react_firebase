@@ -28,9 +28,13 @@ const getVisibleTodos = (todos, filter) => {
   }
 }
 
-const mapStateToProps = state => {
+const firebaseQueries = ({uid}) => (
+  [`todos/${uid}`]
+)
+
+const mapStateToProps = ({visibilityFilter, firebase: {data: {todos}}}, {uid}) => {
   return {
-    todos: getVisibleTodos(state.firebase.data.todos, state.visibilityFilter)
+    todos: getVisibleTodos(todos && todos[uid], visibilityFilter)
   }
 }
 
@@ -42,8 +46,6 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(TodoList)
-
-const firebaseQueries = ['todos'];
 
 const VisibleTodoList = compose(
   firebaseConnect(firebaseQueries),
