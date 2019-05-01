@@ -1,11 +1,21 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import rootReducer from './reducers'
+import { createStore, compose } from 'redux'
+import { reactReduxFirebase } from 'react-redux-firebase'
+import firebase from 'firebase'
+import todoApp from './reducers'
 import App from './components/App'
+import firebaseConfig from './firebase/config'
+// import registerServiceWorker from './registerServiceWorker'
 
-const store = createStore(rootReducer)
+firebase.initializeApp(firebaseConfig);
+
+const createStoreWithFirebase = compose(
+  reactReduxFirebase(firebase, {})
+)(createStore);
+
+const store = createStoreWithFirebase(todoApp);
 
 render(
   <Provider store={store}>
