@@ -1,7 +1,6 @@
 import { compose } from 'redux'
 import { firebaseConnect} from 'react-redux-firebase'
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
 import { toggleTodo } from '../actions/todoActions'
 
