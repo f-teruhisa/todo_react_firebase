@@ -15,8 +15,8 @@ let Login = ({ auth, loginWithGoogle, logout }) => {
       }
   return (
     <div>
-      {auth.displayName} {}
-      <button onClick = {logout}>Logout</button>{}
+      {auth.displayName}
+      <button onClick = {logout}>Logout</button>
     </div>
   );
 }
