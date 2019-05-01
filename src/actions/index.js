@@ -16,10 +16,20 @@ export const setVisibilityFilter = filter => ({
   filter
 })
 
-export const toggleTodo = id => ({
-  type: 'TOGGLE_TODO',
-  id
-})
+export const toggleTodo = id => {
+  return (dispatch, getState, {getFirebase}) => {
+    const firebase = getFirebase();
+    const state = getState();
+    const todo = state.firebase.data.todos[id];
+    dispatch({ type: 'TOGGLE_TODO_REQUEST', text: todo.text, completed: !todo.completed });
+    firebase.update(`todos/${id}`, {completed: !todo.completed})
+    .then(() => {
+      dispatch({ type: 'TOGGLE_TODO_SUCCESS', text: todo.text, completed: !todo.completed });
+    }).catch(err => {
+      dispatch({ type: 'TOGGLE_TODO_ERROR', text: todo.text, completed: !todo.completed, err });
+    });
+  }
+}
 
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
