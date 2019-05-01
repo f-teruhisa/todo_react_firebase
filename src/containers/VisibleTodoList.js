@@ -38,9 +38,13 @@ const mapStateToProps = ({visibilityFilter, firebase: {data: {todos}}}, {uid}) =
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  toggleTodo: id => dispatch(toggleTodo(id))
-})
+const mapDispatchToProps = (dispatch, {uid}) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch(toggleTodo(uid, id))
+    }
+  }
+}
 
 export default connect(
   mapStateToProps,

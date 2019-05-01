@@ -11,14 +11,14 @@ let TodoComponent = ({uid,　authenticating,　authenticated}) => {
     if (authenticating) {
       return <div> Now Login...</div>
     }
-    if (!authenticated) { //#5
+    if (!authenticated) {
       return <div>After login, you can see task list.</div>
     }
   return (
     <div>
-      <AddTodo />
+      < AddTodo uid={uid} />
       <NoticeForTodo />
-      <VisibleTodoList uid={uid} />  {}
+      <VisibleTodoList uid={uid} />
       <Footer />
     </div>
   )

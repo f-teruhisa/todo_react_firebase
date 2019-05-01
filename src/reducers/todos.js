@@ -5,7 +5,8 @@ import {
   ADD_TODO_ERROR,
   TOGGLE_TODO_REQUEST,
   TOGGLE_TODO_SUCCESS,
-  TOGGLE_TODO_ERROR
+  TOGGLE_TODO_ERROR,
+   NOT_AUTHENTICATED_ON_TODO_ACTION
 }
 from '../actions/'
 
@@ -39,6 +40,9 @@ const todos = (state = {}, action) => {
       }
     case LOGOUT_SUCCESS:
       return {}
+     case NOT_AUTHENTICATED_ON_TODO_ACTION:
+       return {...state, notice: 'You must login to add & update tasks'
+      }
     default:
       return state
   }

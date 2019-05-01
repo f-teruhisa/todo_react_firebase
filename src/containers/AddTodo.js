@@ -1,10 +1,9 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { addTodo } from '../actions/todoActions'
+import PropTypes from 'prop-types'
 
-const AddTodo = ({
-  dispatch
-}) => {
+let AddTodo = ({ uid, dispatch}) => {
   let input
 
   return (
@@ -15,7 +14,7 @@ const AddTodo = ({
         if (!input.value.trim()) {
           return
         }
-        dispatch(addTodo(input.value))
+        dispatch(addTodo(uid, input.value))
         input.value = ''
         }}
       >
@@ -24,6 +23,10 @@ const AddTodo = ({
       </form>
     </div>
   )
+}
+
+AddTodo.propTypes = {
+  uid: PropTypes.string.isRequired,
 }
 
 export default connect()(AddTodo)
