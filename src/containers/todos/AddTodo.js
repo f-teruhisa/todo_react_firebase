@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../../actions/todoActions'
-
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
 
 let AddTodo = ({ uid, dispatch}) => {
   let input
@@ -20,7 +20,7 @@ let AddTodo = ({ uid, dispatch}) => {
         }}
       >
         <input ref={node => (input = node)} />
-        <button type = "submit">Add Todo</button>
+        <Button variant="contained" color="secondary" type="submit">Add Todo</Button>
       </form>
     </div>
   )

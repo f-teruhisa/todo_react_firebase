@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { isLoaded, isEmpty } from 'react-redux-firebase'
 import { loginWithGoogle, logout } from '../../actions/authActions'
+import Button from '@material-ui/core/Button'
 
 let Login = ({ auth, loginWithGoogle, logout }) => {
     if (!isLoaded(auth)) {
@@ -10,13 +11,13 @@ let Login = ({ auth, loginWithGoogle, logout }) => {
       }
       if (isEmpty(auth)) {
         return (
-          <button onClick = {loginWithGoogle}>Login with Google Account</button>
+          <Button variant="contained" color="primary" onClick = {loginWithGoogle}>Login with Google Account</Button>
         )
       }
   return (
     <div>
       {auth.displayName}
-      <button onClick = {logout}>Logout</button>
+      <Button variant="contained" color="primary" onClick = {logout}>Logout</Button>
     </div>
   );
 }
