@@ -34,3 +34,26 @@ exports.addRecentUpdateOnUpdateCompleted = functions.database.ref('/todos/{uid}/
       return addRecentUpdate(uid, todoId, text, 'UPDATE');
     });
   })
+
+const MAX_RECENT_UPDATED_TODOS = 10;
+
+exports.limitRecentUpdatedTodos = functions.database.ref('/recentUpdatedTodos/{todoId}/_updatedAt')
+  .onCreate((snapshot, context) => {
+    const recentUpdatedTodosRef = snapshot.ref.parent.parent;
+    return recentUpdatedTodosRef.orderByChild('_updatedAt').once('value').then((todosSnapshot) => {
+
+      if (todosSnapshot.numChildren() <= MAX_RECENT_UPDATED_TODOS) {
+        return null;
+      }
+
+      let childCount = 0;
+      const updates = {};
+      todosSnapshot.forEach((child) => {
+        // remove old updates
+        if (++childCount <= todosSnapshot.numChildren() - MAX_RECENT_UPDATED_TODOS) {
+          updates[child.key] = null;
+        }
+      });
+      return recentUpdatedTodosRef.update(updates);
+    });
+  })
