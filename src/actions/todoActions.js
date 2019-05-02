@@ -9,6 +9,7 @@ import {
   NOT_AUTHENTICATED_ON_TODO_ACTION
 }
 from './'
+import moment from 'moment'
 
 export const locationChangeOnTodos = () => ({
   type: LOCATION_CHANGE_ON_TODOS
@@ -58,7 +59,13 @@ export const addTodo = (uid, text) => {
     }
     dispatch(addTodoRequest());
     const firebase = getFirebase();
-    firebase.push(`todos/${uid}`, { completed: false, text })
+    const createdAt = moment().valueOf();
+    firebase.push(`todos/${uid}`, {
+      completed: false,
+      text,
+      _createdAt: createdAt,
+      _updatedAt: createdAt
+    })
     .then(() => {
       dispatch(addTodoSuccess());
     }).catch(err => {
@@ -77,7 +84,11 @@ export const toggleTodo = (uid, id) => {
     const state = getState();
     const todo = state.firebase.data.todos[uid][id];
     dispatch(toggleTodoRequest(todo.text, !todo.completed));
-    firebase.update(`todos/${uid}/${id}`, {completed: !todo.completed})
+    const updatedAt = moment().valueOf();
+    firebase.update(`todos/${uid}/${id}`, {
+      completed: !todo.completed,
+      _updatedAt: updatedAt
+    })
     .then(() => {
       dispatch(toggleTodoSuccess(todo.text, !todo.completed));
     }).catch(err => {
