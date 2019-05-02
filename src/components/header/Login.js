@@ -9,11 +9,14 @@ import { compose } from 'redux'
 import { withStyles } from '@material-ui/core/styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Avatar from '@material-ui/core/Avatar'
 
-const styles = { noTransform: {
-    textTransform: 'none',
-  },
-}
+const styles = theme => ({
+  textTransform: 'none',
+  avatar: {
+    margin: theme.spacing.unit,
+   },
+})
 
 class Login extends React.Component {
     state = {
@@ -33,7 +36,7 @@ class Login extends React.Component {
     }
 
     render() {
-        const { auth, loginWithGoogle, logout, classes } = this.props
+        const { auth, profile, loginWithGoogle, logout, classes } = this.props
         const { anchorEl } = this.state
 
         if (!isLoaded(auth)) {
@@ -48,7 +51,7 @@ class Login extends React.Component {
         <React.Fragment >
           <Button color = "inherit" aria-owns = {anchorEl ? 'user-menu' : undefined} aria-haspopup = "true"
             onClick={this.handleClick} className={classes.noTransform}>
-            {auth.displayName}
+            {profile.displayName}
           </Button>
           <Menu
             id = "user-menu"
@@ -57,7 +60,8 @@ class Login extends React.Component {
             onClose={this.handleClose}
           >
             <MenuItem onClick = {logout}>Logout</MenuItem>
-        </Menu>
+          </Menu>
+          {profile.avatarUrl && <Avatar alt={profile.displayName} src={profile.avatarUrl} className={classes.avatar}/>}
       </React.Fragment>
     )
   }
@@ -68,11 +72,16 @@ Login.propTypes = {
   loginWithGoogle: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  profile: PropTypes.shape({
+    displayName: PropTypes.string,
+    avatarUrl: PropTypes.string
+  }).isRequired
 }
 
-const mapStateToProps = state => (
-  { auth: state.firebase.auth }
-)
+const mapStateToProps = state => ({
+  auth: state.firebase.auth,
+  profile: state.firebase.profile
+})
 
 const mapDispatchToProps = dispatch => {
   return {
