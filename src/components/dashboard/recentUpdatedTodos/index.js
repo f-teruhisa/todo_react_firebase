@@ -11,6 +11,7 @@ import UserUpdatedTodos from './UserUpdatedTodo'
 import List from '@material-ui/core/List'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 
 const RecentUpdatedList = (todos) => {
   if (!isLoaded(todos)) {
@@ -31,10 +32,10 @@ const RecentUpdatedList = (todos) => {
 
 let RecentUpdatedTodos = ({todos}) => {
   return (
-    <div>
+    <Paper>
       <Typography variant="h5" >Recently Updated</Typography>
       {RecentUpdatedList(todos)}
-    </div>
+    </Paper>
   )
 }
 
