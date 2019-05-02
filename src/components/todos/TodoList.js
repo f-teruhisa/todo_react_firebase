@@ -14,7 +14,7 @@ const styles = theme => ({
   },
 })
 
-const TodoList = ({todos, isOwnTodos, onTodoClick, classes}) => {
+const TodoList = ({todos, isOwnTodos, todoStatuse, onTodoClick, classes}) => {
   if (!isLoaded(todos)) {
     return <CircularProgress className={classes.message} />
   }
@@ -29,6 +29,7 @@ const TodoList = ({todos, isOwnTodos, onTodoClick, classes}) => {
             key={key}
             isOwnTodos={isOwnTodos}
             {...todos[key]}
+            todoStatus={todoStatuses[key]}
             onClick={isOwnTodos ? (() => onTodoClick(key)) : (() => { })} />
         )
       )}
@@ -45,7 +46,8 @@ TodoList.propTypes = {
     })
   ),
   onTodoClick: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  todoStatuses: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(TodoList)
