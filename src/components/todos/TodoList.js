@@ -4,35 +4,31 @@ import PropTypes from 'prop-types'
 import Todo from './Todo'
 import List from '@material-ui/core/List'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
 
-const TodoList = ({displayName, todos, isOwnTodos, onTodoClick}) => {
+const TodoList = ({todos, isOwnTodos, onTodoClick}) => {
   if (!isLoaded(todos)) {
     return <CircularProgress />
   }
   if (isEmpty(todos)) {
-    return <div>Doesn't exist task</div>
+    return <Typography variant="body1">No tasks.</Typography>
   }
-  const name = isOwnTodos ? 'Your' : `${displayName}'s`;
   return (
-    <div>
-      {displayName && <div>{name} Task List</div>}
-      <List>
-        {Object.keys(todos).map(
-          (key) => (
-            <Todo
-              key={key}
-              isOwnTodos = {isOwnTodos}
-              {...todos[key]}
-              onClick = {isOwnTodos ? (() => onTodoClick(key)) : (() => {})}/>
-          )
-        )}
-      </List>
-    </div>
+    <List>
+      {Object.keys(todos).map(
+        (key) => (
+          <Todo
+            key={key}
+            isOwnTodos={isOwnTodos}
+            {...todos[key]}
+            onClick={isOwnTodos ? (() => onTodoClick(key)) : (() => { })} />
+        )
+      )}
+    </List>
   )
 }
 
 TodoList.propTypes = {
-  displayName: PropTypes.string,
   isOwnTodos: PropTypes.bool.isRequired,
   todos: PropTypes.objectOf(
     PropTypes.shape({

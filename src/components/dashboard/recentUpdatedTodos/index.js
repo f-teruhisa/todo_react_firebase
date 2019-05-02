@@ -10,13 +10,14 @@ import PropTypes from 'prop-types'
 import UserUpdatedTodos from './UserUpdatedTodo'
 import List from '@material-ui/core/List'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
 
 const RecentUpdatedList = (todos) => {
   if (!isLoaded(todos)) {
     return <CircularProgress/>
   }
   if (isEmpty(todos)) {
-    return
+    return <Typography variant = "body1" > No data.</Typography>
   }
   return (
     <List>
@@ -28,34 +29,15 @@ const RecentUpdatedList = (todos) => {
   )
 }
 
-let RecentUpdatedTodos = ({ todos }) => {
-  const header = (<h1>Recently Updated</h1>)
-  if (!isLoaded(todos)) {
-    return (
-      <div>
-        <div>{header}</div>
-        <div> Loading… </div>
-      </div>
-    )
-  }
-  if (isEmpty(todos)) {
-    return (
-      <div>
-        <div>{header}</div>
-        <div>No data.</div>
-      </div>
-    )
-  }
+let RecentUpdatedTodos = ({todos}) => {
   return (
     <div>
-      <List>
-        {todos.map(({key, value: todo}) =>
-            <UserUpdatedTodos key={key} {...todo} />
-        )}
-      </List>
+      <Typography variant="h5" >Recently Updated</Typography>
+      {RecentUpdatedList(todos)}
     </div>
   )
 }
+
 RecentUpdatedTodos.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({

@@ -28,19 +28,17 @@ const getVisibleTodos = (todos, filter) => {
   }
 }
 
-const firebaseQueries = ({uid}) => (
-  [
-    {path: `users/${uid}/displayName`, type: 'once'},
-    `todos/${uid}`
-  ]
-)
-
-const mapStateToProps = ({visibilityFilter, firebase: {data: {users, todos}}}, {uid}) => {
+const mapStateToProps = ({ visibilityFilter, firebase: { data: { users, todos } } }, { uid }) => {
   return {
-    displayName: users && users[uid] && users[uid].displayName,
     todos: getVisibleTodos(todos && todos[uid], visibilityFilter)
   }
 }
+
+const firebaseQueries = ({uid}) => (
+  [
+    `todos/${uid}`
+  ]
+)
 
 const mapDispatchToProps = (dispatch, {uid}) => {
   return {

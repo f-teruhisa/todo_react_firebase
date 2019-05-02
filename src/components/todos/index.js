@@ -6,6 +6,7 @@ import Footer from './Footer'
 import Notice from './Notice'
 import AddTodo from '../../containers/todos/AddTodo'
 import VisibleTodoList from '../../containers/todos/VisibleTodoList'
+import Title from './Title'
 
 class TodoComponent extends React.Component {
     componentWillMount() {
@@ -21,6 +22,7 @@ class TodoComponent extends React.Component {
     const {isOwnTodos, match: { params: {uid}}} = this.props;
     return (
       <div>
+        <Title isOwnTodos = {isOwnTodos}uid = {uid}/>
         {isOwnTodos && < AddTodo uid={uid} />}
         <Notice />
         <VisibleTodoList uid={uid} isOwnTodos={isOwnTodos} />
