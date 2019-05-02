@@ -8,30 +8,33 @@ import {
 } from 'react-redux-firebase'
 import PropTypes from 'prop-types'
 import UserUpdatedTodos from './UserUpdatedTodo'
+import List from '@material-ui/core/List'
 
-const RecentUpdatedList = (todos) => {
+let RecentUpdatedTodos = ({ todos }) => {
+  const header = (<h1>Recently Updated</h1>)
   if (!isLoaded(todos)) {
-    return <div> Loading… </div>
+    return (
+      <div>
+        <div>{header}</div>
+        <div> Loading… </div>
+      </div>
+    )
   }
   if (isEmpty(todos)) {
-    return <div>No data.</div>
+    return (
+      <div>
+        <div>{header}</div>
+        <div>No data.</div>
+      </div>
+    )
   }
   return (
-    <ul>
-      {todos.map(({key, value: todo}) =>
-        <UserUpdatedTodos key = {key} {...todo}/>
-      )}
-    </ul>
-  )
-}
-
-let RecentUpdatedTodos = ({
-  todos
-}) => {
-  return (
     <div>
-      <h1>Recently Updated</h1>
-      {RecentUpdatedList(todos)}
+      <List>
+        {todos.map(({key, value: todo}) =>
+            <UserUpdatedTodos key={key} {...todo} />
+        )}
+      </List>
     </div>
   )
 }
