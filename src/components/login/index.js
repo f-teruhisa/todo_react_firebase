@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 import { isLoaded, isEmpty } from 'react-redux-firebase'
 import { loginWithGoogle, logout } from '../../actions/authActions'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 let Login = ({ auth, loginWithGoogle, logout }) => {
     if (!isLoaded(auth)) {
-      return ( <div> Now Login... </div>);
+      return <CircularProgress color = "inherit" />
       }
       if (isEmpty(auth)) {
         return (

@@ -9,6 +9,24 @@ import {
 import PropTypes from 'prop-types'
 import UserUpdatedTodos from './UserUpdatedTodo'
 import List from '@material-ui/core/List'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+const RecentUpdatedList = (todos) => {
+  if (!isLoaded(todos)) {
+    return <CircularProgress/>
+  }
+  if (isEmpty(todos)) {
+    return
+  }
+  return (
+    <List>
+      {todos.map(({key, value: todo}) =>
+        <UserUpdatedTodos key = {key} {...todo} />
+      )
+    }
+    </List>
+  )
+}
 
 let RecentUpdatedTodos = ({ todos }) => {
   const header = (<h1>Recently Updated</h1>)

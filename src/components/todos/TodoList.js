@@ -3,10 +3,11 @@ import { isLoaded, isEmpty } from 'react-redux-firebase'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 import List from '@material-ui/core/List'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const TodoList = ({displayName, todos, isOwnTodos, onTodoClick}) => {
   if (!isLoaded(todos)) {
-    return <div>Loading task list… </div>
+    return <CircularProgress />
   }
   if (isEmpty(todos)) {
     return <div>Doesn't exist task</div>
