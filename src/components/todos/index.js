@@ -2,7 +2,6 @@ import React from 'react'
 import {　connect　} from 'react-redux'
 import PropTypes from 'prop-types'
 import { locationChangeOnTodos } from '../../actions/todoActions'
-import Footer from './Footer'
 import Notice from './Notice'
 import AddTodo from '../../containers/todos/AddTodo'
 import VisibleTodoList from '../../containers/todos/VisibleTodoList'
@@ -10,9 +9,14 @@ import Title from './Title'
 import Paper from '@material-ui/core/Paper'
 import { compose } from 'redux'
 import { withStyles } from '@material-ui/core/styles'
+import FilterNav from './FilterNav'
 
 const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
   todoListRoot: {
+    flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
   todoListContent: {
@@ -36,14 +40,16 @@ class TodoComponent extends React.Component {
   render() {
     const {isOwnTodos, match: { params: {uid}}, classes} = this.props;
     return (
-      <div className = {classes.todoListRoot}>
-        <Paper className = {classes.todoListContent}>
-          <Title isOwnTodos = {isOwnTodos}uid = {uid}/>
-          {isOwnTodos && < AddTodo uid={uid} />}
-          <Notice />
-          <VisibleTodoList uid={uid} isOwnTodos={isOwnTodos} />
-          <Footer />
-        </Paper>
+      <div className={classes.root}>
+        <div className = {classes.todoListRoot}>
+          <Paper className = {classes.todoListContent}>
+            <Title isOwnTodos = {isOwnTodos}uid = {uid}/>
+            {isOwnTodos && < AddTodo uid={uid} />}
+            <Notice />
+            <VisibleTodoList uid={uid} isOwnTodos={isOwnTodos} />
+          </Paper>
+        </div>
+        <FilterNav />
       </div>
     )
   }
