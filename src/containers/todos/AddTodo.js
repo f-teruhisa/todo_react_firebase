@@ -3,27 +3,37 @@ import { connect } from 'react-redux'
 import { addTodo } from '../../actions/todoActions'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
-let AddTodo = ({ uid, dispatch}) => {
-  let input
+class AddTodo extends React.Component {
+  render() {
+    const {uid, dispatch} = this.props
 
-  return (
-    <div>
-      <form
-        onSubmit={e => {
-        e.preventDefault()
-        if (!input.value.trim()) {
-          return
-        }
-        dispatch(addTodo(uid, input.value))
-        input.value = ''
-        }}
-      >
-        <input ref={node => (input = node)} />
-        <Button variant="contained" color="secondary" type="submit">Add Todo</Button>
-      </form>
-    </div>
-  )
+    return (
+      <div>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            if (!this.inputElement.value.trim()) {
+              return
+            }
+            dispatch(addTodo(uid, this.inputElement.value))
+            this.inputElement.value = ''
+          }}
+        >
+          <TextField
+          inputRef = {node => {
+            this.inputElement = node
+          }}
+          />
+          {' '}
+          <Button variant = "contained" color = "secondary" type = "submit">
+            Add Task
+          </Button>
+        </form>
+      </div>
+    )
+  }
 }
 
 AddTodo.propTypes = {
