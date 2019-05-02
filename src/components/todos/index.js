@@ -8,6 +8,20 @@ import AddTodo from '../../containers/todos/AddTodo'
 import VisibleTodoList from '../../containers/todos/VisibleTodoList'
 import Title from './Title'
 import Paper from '@material-ui/core/Paper'
+import { compose } from 'redux'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+  todoListRoot: {
+    padding: theme.spacing.unit * 3,
+  },
+  todoListContent: {
+    maxWidth: 950,
+    padding: theme.spacing.unit * 3,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+})
 
 class TodoComponent extends React.Component {
     componentWillMount() {
@@ -20,10 +34,10 @@ class TodoComponent extends React.Component {
       }
   }
   render() {
-    const {isOwnTodos, match: { params: {uid}}} = this.props;
+    const {isOwnTodos, match: { params: {uid}}, classes} = this.props;
     return (
-      <div>
-        <Paper>
+      <div className = {classes.todoListRoot}>
+        <Paper className = {classes.todoListContent}>
           <Title isOwnTodos = {isOwnTodos}uid = {uid}/>
           {isOwnTodos && < AddTodo uid={uid} />}
           <Notice />
@@ -42,7 +56,8 @@ TodoComponent.propTypes = {
       uid: PropTypes.string.isRequired
     }).isRequired
   }).isRequired,
-  locationChange: PropTypes.func.isRequired
+  locationChange: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 const mapStateToProps = ({ firebase: { auth } }, { match }) => ({
@@ -58,4 +73,9 @@ TodoComponent = connect(
   mapDispatchToProps
 )(TodoComponent)
 
-export default TodoComponent;
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+))(TodoComponent)

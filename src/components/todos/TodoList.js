@@ -5,13 +5,21 @@ import Todo from './Todo'
 import List from '@material-ui/core/List'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
 
-const TodoList = ({todos, isOwnTodos, onTodoClick}) => {
+const styles = theme => ({
+  message: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+  },
+})
+
+const TodoList = ({todos, isOwnTodos, onTodoClick, classes}) => {
   if (!isLoaded(todos)) {
-    return <CircularProgress />
+    return <CircularProgress className={classes.message} />
   }
   if (isEmpty(todos)) {
-    return <Typography variant="body1">No tasks.</Typography>
+    return <Typography variant = "body1" className = {classes.message}> No tasks.</Typography>
   }
   return (
     <List>
@@ -36,7 +44,8 @@ TodoList.propTypes = {
       text: PropTypes.string.isRequired
     })
   ),
-  onTodoClick: PropTypes.func.isRequired
+  onTodoClick: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
-export default TodoList
+export default withStyles(styles)(TodoList)
