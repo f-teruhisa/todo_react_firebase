@@ -6,10 +6,18 @@ exports.addRecentUpdateOnCreate = functions.database.ref('/todos/{uid}/{todoId}/
   .onCreate((snapshot, context) => {
     const uid = context.params.uid;
     const todoId = context.params.todoId;
+    const text = snapshot.val();
 
-    console.log('addRecentUpdateOnCreate called. uid=' + uid + ', todoId=' + todoId);
-
-    return null;
+    return admin.database().ref('/users/' + uid + '/displayName').once('value').then((snapshot) => {
+      const displayName = snapshot.val();
+      return admin.database().ref('/recentUpdatedTodos/' + todoId).set({
+        uid,
+        displayName,
+        text,
+        eventType: 'CREATE',
+        _updatedAt: admin.database.ServerValue.TIMESTAMP
+      });
+    });
   })
 
 exports.addRecentUpdateOnUpdateCompleted = functions.database.ref('/todos/{uid}/{todoId}/completed')
