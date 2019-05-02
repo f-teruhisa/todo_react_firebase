@@ -3,7 +3,7 @@ import { isLoaded, isEmpty } from 'react-redux-firebase'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 
-const TodoList = ({todos, onTodoClick}) => {
+const TodoList = ({displayName,todos,onTodoClick}) => {
   if (!isLoaded(todos)) {
     return <div>Loading task list… </div>
   }
@@ -12,15 +12,19 @@ const TodoList = ({todos, onTodoClick}) => {
   }
 
   return (
-    <ul >
-      {Object.keys(todos).map((key) => (
-        <Todo key={key} {...todos[key]} onClick = {() => onTodoClick(key)}/>
-      ))}
-    </ul>
+    <div>
+      {displayName && <div> {displayName}'s Task List</div>}
+      <ul>
+        {Object.keys(todos).map((key) => (
+          <Todo key={key} {...todos[key]} onClick = {() => onTodoClick(key)}/>
+        ))}
+      </ul>
+    </div>
   )
 }
 
 TodoList.propTypes = {
+  displayName: PropTypes.string,
   todos: PropTypes.objectOf(
     PropTypes.shape({
       completed: PropTypes.bool.isRequired,
