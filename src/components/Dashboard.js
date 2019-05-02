@@ -1,7 +1,10 @@
 import React from 'react'
+import RecentUpdatedTodos from './RecentUpdatedTodos'
 
 const Dashboard = () => (
-  <div>Dashbord</div>
+  <div>
+    < RecentUpdatedTodos />
+  </div>
 )
 
 export default Dashboard;
