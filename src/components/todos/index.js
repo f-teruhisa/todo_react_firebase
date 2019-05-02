@@ -1,11 +1,11 @@
 import React from 'react'
-import Footer from './Footer'
-import NoticeForTodo from './NoticeForTodo'
-import AddTodo from '../containers/AddTodo'
-import VisibleTodoList from '../containers/VisibleTodoList'
 import {　connect　} from 'react-redux'
 import PropTypes from 'prop-types'
-import { locationChangeOnTodos } from '../actions/todoActions'
+import { locationChangeOnTodos } from '../../actions/todoActions'
+import Footer from './Footer'
+import Notice from './Notice'
+import AddTodo from '../../containers/todos/AddTodo'
+import VisibleTodoList from '../../containers/todos/VisibleTodoList'
 
 class TodoComponent extends React.Component {
     componentWillMount() {
@@ -22,7 +22,7 @@ class TodoComponent extends React.Component {
     return (
       <div>
         {isOwnTodos && < AddTodo uid={uid} />}
-        <NoticeForTodo />
+        <Notice />
         <VisibleTodoList uid={uid} isOwnTodos={isOwnTodos} />
         <Footer />
       </div>

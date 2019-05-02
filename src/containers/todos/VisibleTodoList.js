@@ -1,8 +1,8 @@
 import { compose } from 'redux'
 import { firebaseConnect} from 'react-redux-firebase'
 import { connect } from 'react-redux'
-import TodoList from '../components/TodoList'
-import { toggleTodo } from '../actions/todoActions'
+import { toggleTodo } from '../../actions/todoActions'
+import TodoList from '../../components/todos/TodoList'
 
 const getVisibleTodos = (todos, filter) => {
   if (!todos) return todos
