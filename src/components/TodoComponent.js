@@ -6,17 +6,18 @@ import VisibleTodoList from '../containers/VisibleTodoList'
 import {　connect　} from 'react-redux'
 import PropTypes from 'prop-types'
 
-let TodoComponent = ({ match: { params: { uid } } }) => (
+let TodoComponent = ({isOwnTodos,match: {params: {uid}}}) => (
   <div>
-    <AddTodo uid={uid} />
+    {isOwnTodos && <AddTodo/>}
     <NoticeForTodo />
-    <VisibleTodoList uid={uid} />
+    <VisibleTodoList uid={uid} isOwnTodos = {isOwnTodos} />
     <Footer />
   </div>
 )
 
 
 TodoComponent.propTypes = {
+  isOwnTodos: PropTypes.bool.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       uid: PropTypes.string.isRequired
@@ -24,7 +25,8 @@ TodoComponent.propTypes = {
   }).isRequired
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = ({ firebase: { auth } }, { match }) => ({
+  isOwnTodos: auth.uid === match.params.uid,
 })
 
 TodoComponent = connect(
