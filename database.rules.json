@@ -2,7 +2,7 @@
   "rules": {
     "todos": {
       "$uid": {
-        ".read": "$uid === auth.uid",
+        ".read": true,
         ".write": "$uid === auth.uid",
         "$todoId": {
           ".validate": "newData.hasChildren(['text', 'completed'])",
@@ -17,6 +17,10 @@
         ".read": true,
         ".write": "$uid === auth.uid"
       }
+    },
+    "recentUpdatedTodos": {
+      ".read": true,
+      ".write": false
     },
     "$other": { ".validate": false }
   }
