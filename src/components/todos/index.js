@@ -2,7 +2,6 @@ import React from 'react'
 import {　connect　} from 'react-redux'
 import PropTypes from 'prop-types'
 import { locationChangeOnTodos } from '../../actions/todoActions'
-import Notice from './Notice'
 import AddTodo from '../../containers/todos/AddTodo'
 import VisibleTodoList from '../../containers/todos/VisibleTodoList'
 import Title from './Title'
@@ -45,7 +44,6 @@ class TodoComponent extends React.Component {
           <Paper className = {classes.todoListContent}>
             <Title isOwnTodos = {isOwnTodos}uid = {uid}/>
             {isOwnTodos && < AddTodo uid={uid} />}
-            <Notice />
             <VisibleTodoList uid={uid} isOwnTodos={isOwnTodos} />
           </Paper>
         </div>

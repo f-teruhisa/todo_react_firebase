@@ -1,6 +1,6 @@
 import React from 'react'
 import { VisibilityFilters } from '../../actions/visibilityFilterActions'
-import FilterItem from '../../containers/todos/FilterItem'
+import FilterLink from '../../containers/todos/FilterLink'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
