@@ -5,16 +5,30 @@ import AddTodo from '../containers/AddTodo'
 import VisibleTodoList from '../containers/VisibleTodoList'
 import {　connect　} from 'react-redux'
 import PropTypes from 'prop-types'
+import { locationChangeOnTodos } from '../actions/todoActions'
 
-let TodoComponent = ({isOwnTodos,match: {params: {uid}}}) => (
-  <div>
-    {isOwnTodos && <AddTodo/>}
-    <NoticeForTodo />
-    <VisibleTodoList uid={uid} isOwnTodos = {isOwnTodos} />
-    <Footer />
-  </div>
-)
+class TodoComponent extends React.Component {
+    componentWillMount() {
+      this.props.locationChange()
+    }
 
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.location !== this.props.location) {
+        this.props.locationChange()
+      }
+  }
+  render() {
+    const {isOwnTodos, match: { params: {uid}}} = this.props;
+    return (
+      <div>
+        {isOwnTodos && < AddTodo uid={uid} />}
+        <NoticeForTodo />
+        <VisibleTodoList uid={uid} isOwnTodos={isOwnTodos} />
+        <Footer />
+      </div>
+    )
+  }
+}
 
 TodoComponent.propTypes = {
   isOwnTodos: PropTypes.bool.isRequired,
@@ -22,15 +36,21 @@ TodoComponent.propTypes = {
     params: PropTypes.shape({
       uid: PropTypes.string.isRequired
     }).isRequired
-  }).isRequired
+  }).isRequired,
+  locationChange: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ firebase: { auth } }, { match }) => ({
   isOwnTodos: auth.uid === match.params.uid,
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  locationChange: () => dispatch(locationChangeOnTodos())
+})
+
 TodoComponent = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(TodoComponent)
 
 export default TodoComponent;

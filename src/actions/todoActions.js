@@ -1,4 +1,5 @@
 import {
+  LOCATION_CHANGE_ON_TODOS,
   ADD_TODO_REQUEST,
   ADD_TODO_SUCCESS,
   ADD_TODO_ERROR,
@@ -8,6 +9,10 @@ import {
   NOT_AUTHENTICATED_ON_TODO_ACTION
 }
 from './'
+
+export const locationChangeOnTodos = () => ({
+  type: LOCATION_CHANGE_ON_TODOS
+})
 
 const addTodoRequest = () => ({
   type: ADD_TODO_REQUEST

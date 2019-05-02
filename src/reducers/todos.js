@@ -1,4 +1,5 @@
 import {
+  LOCATION_CHANGE_ON_TODOS,
   LOGOUT_SUCCESS,
   ADD_TODO_REQUEST,
   ADD_TODO_SUCCESS,
@@ -38,6 +39,7 @@ const todos = (state = {}, action) => {
       return {...state, notice:
           '"' + action.text + '"error occured'
       }
+    case LOCATION_CHANGE_ON_TODOS:
     case LOGOUT_SUCCESS:
       return {}
      case NOT_AUTHENTICATED_ON_TODO_ACTION:
