@@ -13,6 +13,8 @@ import todoApp from './reducers'
 import App from './components/App';
 import firebaseConfig from './firebase/config'
 // import registerServiceWorker from './registerServiceWorker';
+import {MuiThemeProvider} from '@material-ui/core/styles'
+import {theme} from './materialui/theme'
 
 firebase.initializeApp(firebaseConfig);
 
@@ -23,9 +25,11 @@ const createStoreWithFirebase = compose(
 
 const store = createStoreWithFirebase(todoApp);
 
-render(
+render (
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider theme={theme}> 
+      <App />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
 )
