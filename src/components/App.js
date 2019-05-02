@@ -5,11 +5,12 @@ import Navbar from './navbar/'
 import Dashboard from './dashboard/'
 import TodoComponent from './todos/'
 import NoMatch from './NoMatch'
-
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const App = () => (
   <BrowserRouter>
     <div>
+      <CssBaseline />
       <Login />
       <Navbar />
       <Switch >
